@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 @app.route("/", methods=['get'])
 def index():
-    date_format = "%Y-%m-%d %H:%M:%S"
+    date_format = "%Y-%m-%dT%H:%M:%S"
     file_name = request.args.get('file')
     encrypted_directory = request.args.get('raw_source_folder')
     decrypted_directory  = request.args.get('raw_decrypted_folder')
@@ -26,11 +26,11 @@ def index():
     staging_directory = request.args.get('raw_stage_folder')
     processed_directory =  request.args.get('raw_write_folder')
     last_process_date = request.args.get("last_scan_time")
-    last_process_date = datetime.strptime(last_process_date, date_format)
     app.logger.info("Process Started ...")
     process_file = ProcessFile()
     metadata = Metadata()
     try:
+        last_process_date = datetime.strptime(last_process_date, date_format)
         metadata.details['pre_process_scan_start_time'] = datetime.now(pytz.timezone("Asia/Kolkata")).strftime('%Y-%m-%d %H:%M:%S')
         conn_str=os.environ.get("conn_str")
         container=os.environ.get("container")
