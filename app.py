@@ -61,7 +61,7 @@ def index():
                             archive_path =f"{archive_directory}/{name}"
                             process_file.createfile(blob_service_client,file,archive_path)
                             blob_client.delete_blob()   
-                            metadata.details['Decrypted'] = 1
+                            # metadata.details['Decrypted'] = 1
                         else :    
                             blob_client.delete_blob()    
                             app.logger.error(f"Compression failure")  
