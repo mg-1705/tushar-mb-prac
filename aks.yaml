@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: discover-dollar-deployment
+  name: flask-deployment
   namespace: flask
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: discover-dollar-app
+      app: flask-app
   template:
     metadata:
       namespace: flask
       labels:
-        app: discover-dollar-app
+        app: flask-app
     spec:
       containers:
       - name: discoverdollarrepo
@@ -23,11 +23,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: discover-dollar-app-svc
+  name: flask-app-svc
   namespace: flask
 spec:
   selector:
-    app: discover-dollar-app
+    app: flask-app
   ports:
     - protocol: TCP
       port: 5000
