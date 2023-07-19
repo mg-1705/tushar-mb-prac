@@ -3,7 +3,7 @@ name: Build and Deploy to AKS
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   build-and-deploy:
@@ -16,15 +16,15 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v1
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS_NEW }}
+          creds: ${{ secrets.AZURE_CREDENTIALS_NEW_TO }}
 
       - name: Build and push Docker image
         env:
           ACR_NAME: ${{ secrets.ACR_ENDPOINT }}
         run: |
-          docker build -t $ACR_NAME/python-new:${{ github.sha }} .
+          docker build -t $ACR_NAME/flask:${{ github.sha }} .
           docker login $ACR_NAME -u ${{ secrets.ACR_USERNAME }} -p ${{ secrets.ACR_PASSWORD_SECRET }}
-          docker push $ACR_NAME/python-new:${{ github.sha }}
+          docker push $ACR_NAME/flask:${{ github.sha }}
       - name: Set AKS context
         id: set-context
         uses: azure/aks-set-context@v3
@@ -38,8 +38,8 @@ jobs:
         id: deploy-aks
         uses: Azure/k8s-deploy@v4
         with:
-          namespace: 'python'
+          namespace: 'flask'
           manifests: |
-             azure-aks.yaml
-          images: '${{ secrets.ACR_ENDPOINT }}/python-new:${{ github.sha }}'
+             aks.yaml
+          images: '${{ secrets.ACR_ENDPOINT }}/flask:${{ github.sha }}'
           pull-images: false 
