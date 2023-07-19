@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 @app.route("/", methods=['get'])
 def index():
-    date_format = "%Y-%m-%dT%H:%M:%S"
+    date_format = "%Y-%m-%d %H:%M:%S"
     file_name = request.args.get('file')
     encrypted_directory = request.args.get('raw_source_folder')
     decrypted_directory  = request.args.get('raw_decrypted_folder')
