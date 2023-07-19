@@ -36,7 +36,7 @@ def index():
         container=os.environ.get("container")
         blob_service_client = BlobServiceClient.from_connection_string(conn_str)
         container_client = blob_service_client.get_container_client(container)
-        directories = container_client.walk_blobs(name_starts_with=f"{encrypted_directory}")
+        directories = container_client.walk_blobs(name_starts_with=f"{encrypted_directory}/")
         for directory in directories:
             directory_name = directory["name"]
             blob_list = container_client.list_blobs(name_starts_with=f"{directory_name}{file_name}",include="Metadata")
