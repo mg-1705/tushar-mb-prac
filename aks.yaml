@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
       - name: discoverdollarrepo
-        image: ${{ secrets.ACR_ENDPOINT }}/flask:${{ github.sha }}
+        image: githubactionacrprac.azurecr.io/flask:${{ github.sha }}
         ports:
         - containerPort: 5000
 ---
